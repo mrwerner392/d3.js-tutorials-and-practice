@@ -1,7 +1,8 @@
 var data = [30, 86, 168, 281, 303, 365];
 
 // Find max data number, used for styling below
-let max = Math.max(...data)
+// let max = Math.max(...data)
+let max = d3.max(data)
 
 // First selects the div with class "chart"
 // Calling on d3 object, which we had because of the script in our HTML
@@ -29,3 +30,12 @@ d3.select('.chart')
 // Maybe we could double the width using d * 2
 // Maybe we could add a unit to the text with '$' + d
 // Maybe we could use d to add color to each bar, d impacting the rgb color values
+
+// Check out for scaling the width of the bars: https://bost.ocks.org/mike/bar/
+// Code would look something like this:
+        // const x = d3.scale.linear()
+        // .domain([0, d3.max(data)])
+        // .range([0, 420]);
+
+        // ...
+        // .style('width', function(d) {return x(d) +'px'})
