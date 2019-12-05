@@ -10,13 +10,13 @@ const randomLetters = () => {
   return randLetters;
 }
 
+const svg = d3.select("svg")
+              .attr("width", width)
+              .attr("height", 33)
+              .attr("viewBox", `0 -20 ${width} 33`);
+
+
 const createElementsFromNothing = () => {
-
-  const svg = d3.create("svg")
-                  .attr("width", width)
-                  .attr("height", 33)
-                  .attr("viewBox", `0 -20 ${width} 33`);
-
   // .join handles update, enter, and exit all in one
   // adds entered elements to update and removes exited elements
   svg.selectAll("text")
@@ -28,20 +28,20 @@ const createElementsFromNothing = () => {
   return svg.node();
 }
 
-document.querySelector('body').appendChild(createElementsFromNothing());
+createElementsFromNothing()
 
-// const svg = d3.create("svg")
-//       .attr("width", width)
-//       .attr("height", 33)
-//       .attr("viewBox", `0 -20 ${width} 33`);
+
+// const joinEvery2Seconds = () => {
 //
-// while (true) {
-//   svg.selectAll("text")
-//     .data(randomLetters())
-//     .join("text")
-//       .attr("x", (d, i) => i * 16)
-//       .text(d => d);
+//   while (true) {
+//     svg.selectAll("text")
+//         .data(randomLetters())
+//         .join("text")
+//         .attr("x", (d, i) => i * 16)
+//         .text(d => d);
 //
-//   yield svg.node();
-//   await Promises.tick(2500);
+//     yield svg.node();
+//   }
 // }
+//
+// await Promises.tick(2000);
