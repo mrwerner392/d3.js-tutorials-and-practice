@@ -28,20 +28,22 @@ const createElementsFromNothing = () => {
   return svg.node();
 }
 
-createElementsFromNothing()
+// createElementsFromNothing()
 
+// this is a generator function
+// each call of .next().value in the interval below
+// runs next iteration of the loop
+function* joinEvery2Seconds() {
+  while (true) {
+    svg.selectAll("text")
+        .data(randomLetters())
+        .join("text")
+        .attr("x", (d, i) => i * 16)
+        .text(d => d);
 
-// const joinEvery2Seconds = () => {
-//
-//   while (true) {
-//     svg.selectAll("text")
-//         .data(randomLetters())
-//         .join("text")
-//         .attr("x", (d, i) => i * 16)
-//         .text(d => d);
-//
-//     yield svg.node();
-//   }
-// }
-//
-// await Promises.tick(2000);
+    yield
+  }
+}
+
+const join = joinEvery2Seconds()
+setInterval(() => join.next().value, 2000)
