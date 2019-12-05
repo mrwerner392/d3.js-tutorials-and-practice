@@ -16,25 +16,36 @@ const svg = d3.select("svg")
               .attr("viewBox", `0 -20 ${width} 33`);
 
 
-const createElementsFromNothing = () => {
-  // .join handles update, enter, and exit all in one
-  // adds entered elements to update and removes exited elements
-  svg.selectAll("text")
-      .data(randomLetters())
-      .join("text")
-      .attr("x", (d, i) => i * 16)
-      .text(d => d);
+// -----CREATE ELEMENTS FROM NOTHING-----
 
-  return svg.node();
-}
-
+// const createElementsFromNothing = () => {
+//   // .join handles update, enter, and exit all in one
+//   // adds entered elements to existing and removes exited elements
+//   svg.selectAll("text")
+//       .data(randomLetters())
+//       .join("text")
+//       .attr("x", (d, i) => i * 16)
+//       .text(d => d);
+//
+//   return svg.node();
+// }
+//
 // createElementsFromNothing()
+
+// --------------------------------
+
+// -----NEW JOIN EVERY 2 SECONDS-----
 
 // this is a generator function
 // each call of .next().value in the interval below
 // runs next iteration of the loop
 function* joinEvery2Seconds() {
   while (true) {
+
+    // each time this runs, .join appends entering elements
+    // and removes exiting elements, then merges the entered
+    // with the existing and updates all at the same time
+    // with .attr and .text
     svg.selectAll("text")
         .data(randomLetters())
         .join("text")
@@ -47,3 +58,5 @@ function* joinEvery2Seconds() {
 
 const join = joinEvery2Seconds()
 setInterval(() => join.next().value, 2000)
+
+// ---------------------------------------
