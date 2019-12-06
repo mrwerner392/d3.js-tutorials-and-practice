@@ -25,6 +25,7 @@ const svg = d3.select("svg")
 //       .data(randomLetters())
 //       .join("text")
 //       .attr("x", (d, i) => i * 16)
+          // sets the text of the 'text' element based on data
 //       .text(d => d);
 //
 //   return svg.node();
