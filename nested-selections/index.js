@@ -43,3 +43,14 @@ const td = d3.selectAll("tbody tr")
 //   .enter().append('tr') // success
 
 // CREATE TABLE FROM SCRATCH
+// append new element to body
+const body = d3.select('body')
+const table = body.append('table')
+// bind data and append new rows
+const tr = table.selectAll("tr")
+                .data(matrix)
+                .enter().append("tr");
+// add tds, bind data, append tds to enter selection
+const tds = tr.selectAll("td")
+              .data(function(d) { return d; })
+              .enter().append("td");
