@@ -37,27 +37,63 @@ const svg = d3.select("svg")
 
 // -----NEW JOIN EVERY 2 SECONDS-----
 
-// this is a generator function
-// each call of .next().value in the interval below
-// runs next iteration of the loop
-function* joinEvery2Seconds() {
+// // this is a generator function
+// // each call of .next().value in the interval below
+// // runs next iteration of the loop
+// function* joinEvery2Seconds() {
+//   while (true) {
+//
+//     // each time this runs, .join appends entering elements
+//     // and removes exiting elements, then merges the entered
+//     // with the existing and updates all at the same time
+//     // with .attr and .text
+//     svg.selectAll("text")
+//         .data(randomLetters())
+//         .join("text")
+//         .attr("x", (d, i) => i * 16)
+//         .text(d => d);
+//
+//     yield
+//   }
+// }
+//
+// const join = joinEvery2Seconds()
+// setInterval(() => join.next().value, 2000)
+
+// ---------------------------------------
+
+// -----ADDING TRANSITIONS-----
+
+function* animate() {
   while (true) {
+    const t = svg.transition()
+                  .duration(750);
 
-    // each time this runs, .join appends entering elements
-    // and removes exiting elements, then merges the entered
-    // with the existing and updates all at the same time
-    // with .attr and .text
     svg.selectAll("text")
-        .data(randomLetters())
-        .join("text")
-        .attr("x", (d, i) => i * 16)
-        .text(d => d);
-
+        .data(randomLetters(), d => d)
+        .join(
+          enter => enter.append("text")
+                          .attr("fill", "green")
+                          .attr("x", (d, i) => i * 16)
+                          .attr("y", -30)
+                          .text(d => d)
+                        .call(enter => enter.transition(t)
+                          .attr("y", 0)),
+          update => update
+                      .attr("fill", "black")
+                      .attr("y", 0)
+                    .call(update => update.transition(t)
+                      .attr("x", (d, i) => i * 16)),
+          exit => exit
+                    .attr("fill", "brown")
+                  .call(exit => exit.transition(t)
+                    .attr("y", 30)
+                    .remove())
+        );
+        
     yield
   }
 }
 
-const join = joinEvery2Seconds()
-setInterval(() => join.next().value, 2000)
-
-// ---------------------------------------
+const animation = animate()
+setInterval(() => animation.next().value, 2000)
