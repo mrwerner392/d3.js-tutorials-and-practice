@@ -28,3 +28,18 @@ const td = d3.selectAll("tbody tr")
               // total of 16 data points for 16 tds
               .selectAll("td")
                 .data(function(d, i) { return d; }); // d is matrix[i]
+
+// // APPENDING ELEMENTS
+// // selectAll sets the parent node. cannot append to a
+// // selection whose parent node is the html
+// // this will error out:
+// d3.selectAll("table tr") // parent is html
+//   .data(matrix)
+//   .enter().append("tr"); // error!
+
+// // need to nest selections first
+// d3.select('table').selectAll('tr')
+//   .data(matrix)
+//   .enter().append('tr') // success
+
+// CREATE TABLE FROM SCRATCH
